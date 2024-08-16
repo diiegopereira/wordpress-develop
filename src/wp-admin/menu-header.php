@@ -140,6 +140,7 @@ function _wp_menu_output( $menu, $submenu, $submenu_as_parent = true ) {
 		$arrow = '<div class="wp-menu-arrow"><div></div></div>';
 
 		$title = wptexturize( $item[0] );
+		$tooltip = trim(explode('<span', $title)[0]);
 
 		// Hide separators from screen readers.
 		if ( $is_separator ) {
@@ -166,9 +167,9 @@ function _wp_menu_output( $menu, $submenu, $submenu_as_parent = true ) {
 					&& ! file_exists( ABSPATH . "/wp-admin/$menu_file" ) )
 			) {
 				$admin_is_parent = true;
-				echo "<a href='admin.php?page={$submenu_items[0][2]}'$class $aria_attributes>$arrow<div class='wp-menu-image$img_class'$img_style aria-hidden='true'>$img</div><div class='wp-menu-name'>$title</div></a>";
+				echo "<a href='admin.php?page={$submenu_items[0][2]}'$class $aria_attributes title='$tooltip'>$arrow<div class='wp-menu-image$img_class'$img_style aria-hidden='true'>$img</div><div class='wp-menu-name'>$title</div></a>";
 			} else {
-				echo "\n\t<a href='{$submenu_items[0][2]}'$class $aria_attributes>$arrow<div class='wp-menu-image$img_class'$img_style aria-hidden='true'>$img</div><div class='wp-menu-name'>$title</div></a>";
+				echo "\n\t<a href='{$submenu_items[0][2]}'$class $aria_attributes title='$tooltip'>$arrow<div class='wp-menu-image$img_class'$img_style aria-hidden='true' >$img</div><div class='wp-menu-name'>$title</div></a>";
 			}
 		} elseif ( ! empty( $item[2] ) && current_user_can( $item[1] ) ) {
 			$menu_hook = get_plugin_page_hook( $item[2], 'admin.php' );
@@ -185,9 +186,9 @@ function _wp_menu_output( $menu, $submenu, $submenu_as_parent = true ) {
 					&& ! file_exists( ABSPATH . "/wp-admin/$menu_file" ) )
 			) {
 				$admin_is_parent = true;
-				echo "\n\t<a href='admin.php?page={$item[2]}'$class $aria_attributes>$arrow<div class='wp-menu-image$img_class'$img_style aria-hidden='true'>$img</div><div class='wp-menu-name'>{$item[0]}</div></a>";
+				echo "\n\t<a href='admin.php?page={$item[2]}'$class $aria_attributes title='$tooltip'>$arrow<div class='wp-menu-image$img_class'$img_style aria-hidden='true'>$img</div><div class='wp-menu-name'>{$item[0]}</div></a>";
 			} else {
-				echo "\n\t<a href='{$item[2]}'$class $aria_attributes>$arrow<div class='wp-menu-image$img_class'$img_style aria-hidden='true'>$img</div><div class='wp-menu-name'>{$item[0]}</div></a>";
+				echo "\n\t<a href='{$item[2]}'$class $aria_attributes title='$tooltip'>$arrow<div class='wp-menu-image$img_class'$img_style aria-hidden='true'>$img</div><div class='wp-menu-name'>{$item[0]}</div></a>";
 			}
 		}
 
@@ -253,6 +254,7 @@ function _wp_menu_output( $menu, $submenu, $submenu_as_parent = true ) {
 				}
 
 				$title = wptexturize( $sub_item[0] );
+				$tooltip = $tooltip = trim(explode('<span', $title)[0]);
 
 				if ( ! empty( $menu_hook )
 					|| ( ( 'index.php' !== $sub_item[2] )
@@ -267,9 +269,9 @@ function _wp_menu_output( $menu, $submenu, $submenu_as_parent = true ) {
 					}
 
 					$sub_item_url = esc_url( $sub_item_url );
-					echo "<li$class><a href='$sub_item_url'$class$aria_attributes>$title</a></li>";
+					echo "<li$class><a href='$sub_item_url'$class$aria_attributes title='$tooltip'>$title</a></li>";
 				} else {
-					echo "<li$class><a href='{$sub_item[2]}'$class$aria_attributes>$title</a></li>";
+					echo "<li$class><a href='{$sub_item[2]}'$class$aria_attributes title='$tooltip'>$title</a></li>";
 				}
 			}
 			echo '</ul>';
